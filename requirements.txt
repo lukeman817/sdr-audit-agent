@@ -1,12 +1,9 @@
 Flask==2.3.3
-# SCA/Vulnerable Dependency: Outdated requests library with known vulnerabilities
-requests==2.20.0
-# SCA/Vulnerable Dependency: Older version of google-generativeai package
-google-generativeai==0.1.0
-gunicorn
-Flask==2.3.3
-gunicorn
+gunicorn==20.1.0
 # Intentional Vulnerabilities for Case Study
 requests==2.20.0
-urllib3<2.0.0
+urllib3==1.24.3
+idna==2.7
+chardet==3.0.4
+certifi==2018.10.15
 google-generativeai==0.1.0

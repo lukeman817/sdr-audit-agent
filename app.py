@@ -1,3 +1,6 @@
+import sys
+import urllib3
+sys.modules['urllib3.packages.six.moves'] = urllib3.packages.six.moves
 from flask import Flask, render_template, request, jsonify
 import google.generativeai as genai
 import os

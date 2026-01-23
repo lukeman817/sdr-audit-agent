@@ -25,7 +25,7 @@ def index():
 # ==========================================================
 @app.route('/aikido.txt')
 def aikido_verification():
-    return "YOUR_AIKIDO_STRING_HERE"
+    return "validation.aikido.529a0524bf9df99dadb6275751336ca2"
 
 @app.route('/chat', methods=['POST'])
 def chat():

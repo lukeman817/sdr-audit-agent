@@ -85,7 +85,3 @@ def health_check():
 # for potential remote code execution and is a major security flag.
 # ==========================================================
 if __name__ == '__main__':
-    # Dynamically bind to the port provided by the host
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
-https://sdr-audit-agent.onrender.com/aikido.txt

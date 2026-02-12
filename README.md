@@ -1,76 +1,44 @@
-# SDR-Audit-Agent
+🤖 SDR Audit Agent: A Study in AI-Native Vulnerabilities
+Overview
+This project is a proof-of-concept AI agent built using "vibe coding" (Cursor + LLM-assisted development). The goal was to build a functional tool for auditing SDR outreach while intentionally—and sometimes unintentionally—observing how rapid, AI-assisted development can introduce significant security "noise" and vulnerabilities into the SDLC.
 
-A Flask web application with intentionally included security vulnerabilities for security audit demonstration purposes.
+Live Demo: https://sdr-audit-agent.onrender.com
 
-## ⚠️ Security Notice
+The Stack
+IDE: Cursor (AI-Native Code Editor)
 
-**This application contains intentional security vulnerabilities for educational and audit purposes only. Do NOT use in production environments.**
+Language: Python / Flask
 
-## Vulnerabilities Included
+LLM: Google Gemini 1.5 Pro / Flash
 
-1. **Secret Leak**: Hardcoded Google API key in source code
-2. **SCA/Vulnerable Dependencies**: Outdated packages with known vulnerabilities
-3. **AI Risk (Prompt Injection)**: Unsanitized user input in system prompts
-4. **BOLA/IDOR**: Unauthenticated access to lead data endpoints
-5. **Technical Debt**: Dockerfile runs as root user
+Deployment: Render
 
-## Setup
+Database: Local dictionary (simulating a production LEADS_DATABASE)
 
-### Prerequisites
-- Python 3.9+
-- Git (for version control)
+Security Findings (The "Pentest" Perspective)
+As a Strategic AE in the AppSec space, I built this to better understand the developer's experience when balancing speed vs. security. During the build, I identified three critical categories of vulnerabilities that modern AI-native security platforms must address:
 
-### Installation
+1. Prompt Injection (Insecure Output Handling)
+Because the agent directly appends user-provided audit notes to the system prompt without sanitization, it is susceptible to prompt injection. An attacker could potentially override the "Audit Agent" instructions to extract internal system logic.
 
-1. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+Status: Identified in app.py.
 
-2. Run the application:
-```bash
-python app.py
-```
+2. Broken Object Level Authorization (BOLA / IDOR)
+The initial lead retrieval logic relied on predictable integer IDs. In a production environment without proper session validation, a user could manipulate the lead_id to access sensitive PII (Personally Identifiable Information) of other leads.
 
-3. Access the web interface:
-- Open your browser to `http://localhost:5000`
+Status: Identified in lead retrieval routes.
 
-## API Endpoints
+3. Secret Sprawl & Exposure
+During the rapid "vibe coding" phase, it is incredibly easy to hardcode API keys directly into the source to get the "Live" green light. This project highlights the necessity of automated secret scanning in the CI/CD pipeline.
 
-- `GET /` - Web interface
-- `POST /api/chat` - Chat endpoint (vulnerable to prompt injection)
-- `GET /api/leads` - List all leads (BOLA/IDOR vulnerability)
-- `GET /api/leads/<lead_id>` - Get specific lead (BOLA/IDOR vulnerability)
+Why I Built This
+I believe the next generation of security disruption isn't just about finding bugs—it's about automated guardrails. As development moves at the speed of Agentic AI, the security industry must provide tools that integrate seamlessly into the developer's workflow (like Cursor) to ensure we aren't shipping "vulnerable by design" software.
 
-## Git Setup
+Getting Started
+Clone the repo: git clone https://github.com/lukeman817/sdr-audit-agent
 
-To connect this repository to GitHub:
+Install requirements: pip install -r requirements.txt
 
-1. Run the setup script:
-```powershell
-.\setup-git.ps1
-```
+Add your API key to .env.
 
-2. Push to GitHub:
-```bash
-git push -u origin main
-```
-
-Or if your default branch is `master`:
-```bash
-git push -u origin master
-```
-
-## Docker
-
-Build and run with Docker:
-```bash
-docker build -t sdr-audit-agent .
-docker run -p 5000:5000 sdr-audit-agent
-```
-
-**Note**: The Dockerfile intentionally runs as root for demonstration purposes.
-
-## Repository
-
-GitHub: https://github.com/lukeman817/sdr-audit-agent.git
+Run locally: python app.py

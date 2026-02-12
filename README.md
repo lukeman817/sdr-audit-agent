@@ -1,91 +1,55 @@
-# 🤖 SDR Audit Agent: A Study in AI-Native Vulnerabilities
+🤖 SDR Audit Agent: The "Vibe Coding" Security Experiment
+Executive Summary
+This project serves as a case study for the Velocity vs. Validation Gap—the paradox where AI-assisted development tools (like Cursor and Gemini) accelerate shipping speeds by 10x while simultaneously creating invisible security debt. I built this functional SDR Audit Agent to demonstrate how rapid development can introduce critical vulnerabilities into the software development life cycle (SDLC) if automated guardrails are not prioritized.
 
-### **Overview**
-This project is a proof-of-concept AI agent built using "vibe coding" (Cursor + LLM-assisted development). The goal was to build a functional tool for auditing SDR outreach while intentionally observing how rapid, AI-assisted development can introduce significant security "noise" and vulnerabilities into the SDLC.
+Live Demo: https://sdr-audit-agent.onrender.com
 
-**Live Demo:** [https://sdr-audit-agent.onrender.com](https://sdr-audit-agent.onrender.com)
+The Technical Receipt
+IDE: Cursor (AI-Native Code Editor)
 
----
+Language: Python / Flask
 
-### **The Stack**
-* **IDE:** Cursor (AI-Native Code Editor)
-* **Language:** Python / Flask
-* **LLM:** Google Gemini 1.5 Pro / Flash
-* **Deployment:** Render
-* **Database:** Local dictionary (simulating a production `LEADS_DATABASE`)
-* **Tooling & Verification:** This project was used to test the ingestion and 'vulnerability noise' levels of modern ASPM and developer-first security platforms (e.g., **Aikido Security**) to better understand the practitioner's workflow.
+LLM: Google Gemini 1.5 Pro / Flash
 
----
+Deployment: Render
 
-### **Security Findings (The "Pentest" Perspective)**
-As an Enterprise AE in the AppSec space, I built this to better understand the developer's experience when balancing speed vs. security. I identified three critical categories of vulnerabilities that modern AI-native security platforms must address:
+Validation: Verified via Aikido Security
 
-#### **1. Prompt Injection & Secret Leak**
-Because the agent directly appends user-provided audit notes to the system prompt without sanitization, it is susceptible to prompt injection. Additionally, the rapid "vibe coding" phase makes it easy to hardcode API keys directly into the source.
+Practitioner Insights (The "Audit" Perspective)
+As a Technical AE, I believe you can't effectively sell security without understanding the developer's friction. By auditing my own AI-generated build, I identified three critical vulnerabilities that represent major business risks for AI-native companies:
 
-![Secret Leak and Prompt Injection](Secret_Leak_Vulnerability.png)
+1. BOLA / IDOR (Broken Object Level Authorization)
+The lead retrieval logic relied on predictable integer IDs without session validation.
 
-* **Status:** Identified in `app.py`.
+Business Risk: Unauthorized extraction of sensitive PII, representing a critical failure in GDPR/SOC2 compliance.
 
-#### **2. Broken Object Level Authorization (BOLA / IDOR)**
-The initial lead retrieval logic relied on predictable integer IDs. In a production environment without proper session validation, a user could manipulate the `lead_id` to access sensitive PII of other leads.
+Status: Identified in lead retrieval routes.
 
-![BOLA Vulnerability Screenshot](BOLA_IDOR_Vulnerability.png)
+2. Prompt Injection & AI Logic Manipulation
+The agent appends unsanitized user notes directly to the system prompt.
 
-* **Status:** Identified in lead retrieval routes.
+Business Risk: Allows an attacker to manipulate automated business logic or exfiltrate internal system instructions.
 
----
+Status: Identified in app.py.
 
-### **Business Value & Risk Impact**
-I look at these technical flaws through the lens of business risk:
-* **Compliance & Trust:** The identified **BOLA** vulnerability represents a critical risk to customer trust and regulatory compliance (GDPR/SOC2/CCPA), as it allows for unauthorized PII extraction with minimal effort.
-* **Operational Integrity:** **Prompt Injection** risks can lead to data exfiltration or manipulation of automated business logic, potentially causing brand damage in an agentic workflow.
-* **Security Debt:** **Secret Sprawl** represents latent risk; hardcoded keys are a primary vector for supply chain attacks.
+3. Secret Sprawl & Latent Risk
+The rapid development phase led to hardcoded API keys directly in the source code.
 
----
+Business Risk: Hardcoded credentials are a primary vector for supply chain attacks and unauthorized API usage.
 
-### **Validation & Automated Scanning**
-To validate these findings, I integrated this repository with **Aikido Security** to perform an automated Web Application Security Assessment.
+Continuous Validation & Scaling
+To ensure this build meets enterprise standards, I integrated this repository with Aikido Security for automated assessment.
 
-#### **Scan Summary**
-The automated scan successfully identified the critical risk of running in Flask Debug Mode and validated the presence of Cross-Site Scripting (XSS) vulnerabilities.
+100% Endpoint Coverage: The scan audited all 6 endpoints, including the logic-heavy /chat route.
 
-![Aikido Scan Results](Aikido_Scan_Results.png)
+Agentic AI Attacker Agents: I utilized AI-native attacker agents to perform GraphQL introspection and hardening checks, mirroring the new standard for rapid security validation.
 
-#### **Endpoint Coverage**
-The scan achieved **100% coverage** across all 6 endpoints, ensuring that every route—from the logic-heavy `/chat` to the verification `/aikido.txt`—was audited.
+Why I Built This
+The next generation of security disruption isn't just about finding bugs—it's about automated guardrails. As development moves at the speed of Agentic AI, we must provide tools that integrate seamlessly into the IDE to ensure we aren't shipping "vulnerable by design" software.
 
-![Aikido Endpoint Coverage](Aikido_Endpoint_Coverage.png)
+Connect with Me
+I am a Technical AE focused on the intersection of AI, AppSec, and modern developer workflows.
 
-#### **Agentic AI Logic**
-Most interestingly, I utilized **Agentic AI Attacker Agents** to perform hardening checks, such as GraphQL introspection, demonstrating how AI-native tools are becoming the new standard for securing rapid-deployment workflows.
+LinkedIn: linkedin.com/in/fergusonluke | Email: lukeferguson817@gmail.com
 
-![Aikido AI Agent Logic](Aikido_AI_Agent_Logic.png)
-
----
-
-### **Deployment**
-The application is continuously deployed via **Render**, providing a live environment to test these vulnerabilities in a real-world setting.
-
-![Render Deployment Status](Render_Deployment_Status.png)
-
----
-
-### **Why I Built This**
-I believe the next generation of security disruption isn't just about finding bugs—it's about **automated guardrails**. As development moves at the speed of Agentic AI, the security industry must provide tools that integrate seamlessly into the developer's workflow (like Cursor) to ensure we aren't shipping "vulnerable by design" software.
-
----
-
-### **Getting Started**
-1.  **Clone the repo:** `git clone https://github.com/lukeman817/sdr-audit-agent`
-2.  **Install requirements:** `pip install -r requirements.txt`
-3.  **Environment Variables:** Add your API key to a `.env` file (not provided in repo).
-4.  **Run locally:** `python app.py`
-
----
-
-### **Connect with me**
-**LinkedIn:** [linkedin.com/in/fergusonluke](https://www.linkedin.com/in/fergusonluke/) | **Email:** lukeferguson817@gmail.com
-
----
-*Disclaimer: This application is intentionally vulnerable and was built for educational and demonstration purposes. Do not use this code in a production environment without implementing proper security guardrails.*
+Disclaimer: This application is intentionally vulnerable and was built for educational and demonstration purposes. Do not use this code in a production environment without implementing proper security guardrails.
